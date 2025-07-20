@@ -67,6 +67,12 @@ wheels = [
 ]
 
 [[package]]
+name = "antiorm"
+version = "1.2.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/0b/f8/71baa4824d9666c1be51d117119579a97f461ddbded48b2e01a6ad0554b5/antiorm-1.2.1.tar.gz", hash = "sha256:96eb1841ce5163db4cf1dc13f4499ec2d7cffc190cf724b78ffdd3e6b7c4ff93", size = 171953, upload-time = "2016-06-28T22:52:03.354Z" }
+
+[[package]]
 name = "anyio"
 version = "4.9.0"
 source = { registry = "https://pypi.org/simple" }
@@ -335,6 +341,24 @@ sdist = { url = "https://files.pythonhosted.org/packages/64/a4/f71d9cf3a5ac257c9
 wheels = [
     { url = "https://files.pythonhosted.org/packages/c3/be/d0d44e092656fe7a06b55e6103cbce807cdbdee17884a5367c68c9860853/dataclasses_json-0.6.7-py3-none-any.whl", hash = "sha256:0dbf33f26c8d5305befd61b39d2b3414e8a407bedc2834dea9b8d642666fb40a", size = 28686, upload-time = "2024-06-09T16:20:16.715Z" },
 ]
+
+[[package]]
+name = "db"
+version = "0.1.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "antiorm" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/a9/22/f65d64c83e63790b3273c6adb3bff338ad594f46d84b41bd1f94593b40a6/db-0.1.1.tar.gz", hash = "sha256:980e772f15c1161d3b287ffec4f144e40961b0b3e6d5102809577870bf6c5808", size = 3350, upload-time = "2014-12-13T05:13:58.159Z" }
+
+[[package]]
+name = "db-sqlite3"
+version = "0.0.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "db" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/ff/00/e1f3d7bf1e0bff7c0574c0d5535c041e139d4ce43db196147e4c62f52ed5/db-sqlite3-0.0.1.tar.gz", hash = "sha256:4dd410aa28a2c5b66de477f9dc62f523133217dd31c7ed7eb085214bea148db9", size = 1390, upload-time = "2013-06-10T06:13:49.316Z" }
 
 [[package]]
 name = "distro"
@@ -1817,6 +1841,7 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "bs4" },
+    { name = "db-sqlite3" },
     { name = "dotenv" },
     { name = "langchain", extra = ["google-genai"] },
     { name = "langchain-chroma" },
@@ -1830,6 +1855,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "bs4", specifier = ">=0.0.2" },
+    { name = "db-sqlite3", specifier = ">=0.0.1" },
     { name = "dotenv", specifier = ">=0.9.9" },
     { name = "langchain", extras = ["google-genai"], specifier = ">=0.3.26" },
     { name = "langchain-chroma", specifier = ">=0.2.4" },
