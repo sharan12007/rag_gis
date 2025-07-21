@@ -15,6 +15,7 @@ load_dotenv()
 
 
 #environment variables
+os.environ["USER_AGENT"] = "RAG-GIS-Agent/1.0 (Linux; Python)"
 os.environ["LANGSMITH_TRACING"] = "true"
 os.environ["LANGSMITH_API_KEY"]=os.getenv("LANGSMITH_API_KEY")
 os.environ["GOOGLE_API_KEY"]=os.getenv("GOOGLE_API_KEY")
@@ -88,7 +89,7 @@ def generate(state:MessagesState):
 
 #Memory saver
 memory=MemorySaver()
-config={"configurable":{"thread_id":"1"}}
+config={"configurable":{"thread_id":"abc123"}}
 #LangGraph definition
 graph_builder=StateGraph(MessagesState)
 graph_builder.add_node(chatbot)
@@ -108,6 +109,7 @@ chk=True
 print("Welcome to the RAG GIS Chatbot! Type 'exit' to quit.")
 while chk:
     try:
+        last_message=[]
         user_input= input("user: ")
         if(user_input.lower() == "exit"):
             chk=False
@@ -118,8 +120,10 @@ while chk:
         ):
             for message in steps["messages"]:
                 if message.type == "ai":
-                    print(f"AI: {message.content}")
-                
+                        last_message.append(message.content)
+        if last_message:
+                print(f"AI: {last_message[-1]}")
+        last_message.clear()
     except Exception as e:
         print(f"An error occurred: {e}")
 
