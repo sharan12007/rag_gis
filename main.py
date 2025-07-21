@@ -9,8 +9,10 @@ from langchain_core.tools import tool
 from langchain_core.messages import SystemMessage
 from langgraph.graph import END
 from langgraph.prebuilt import ToolNode,tools_condition
+from langgraph.checkpoint.memory import MemorySaver
 import os
 load_dotenv()
+
 
 #environment variables
 os.environ["LANGSMITH_TRACING"] = "true"
@@ -84,7 +86,9 @@ def generate(state:MessagesState):
     response=llm.invoke(prompts)
     return {"messages": [response]}
 
-
+#Memory saver
+memory=MemorySaver()
+config={"configurable":{"thread_id":"1"}}
 #LangGraph definition
 graph_builder=StateGraph(MessagesState)
 graph_builder.add_node(chatbot)
@@ -98,7 +102,7 @@ graph_builder.add_conditional_edges(
 graph_builder.add_edge("tools","generate")
 graph_builder.add_edge("chatbot", END)
 
-graph=graph_builder.compile()
+graph=graph_builder.compile(checkpointer=memory)
 
 chk=True
 print("Welcome to the RAG GIS Chatbot! Type 'exit' to quit.")
@@ -110,7 +114,7 @@ while chk:
             print("Exiting the chatbot. Goodbye!")
             break
         for steps in graph.stream(
-            {"messages":[{"role":"user","content":user_input}]},stream_mode="values"
+            {"messages":[{"role":"user","content":user_input}]},stream_mode="values",config=config
         ):
             for message in steps["messages"]:
                 if message.type == "ai":
