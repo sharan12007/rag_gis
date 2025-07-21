@@ -1,4 +1,4 @@
-from urlVaildCheck import url_valid_check
+from urlAvailableCheck import url_valid_check
 from langchain_community.document_loaders import WebBaseLoader
 from langchain_chroma import Chroma
 from langchain_text_splitters import RecursiveCharacterTextSplitter
