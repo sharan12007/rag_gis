@@ -1,1 +1,7 @@
 dotenv
+langchain-text-splitters 
+langchain-community 
+langgraph
+langchain[google-genai]
+langchain
+langchain_tavily
