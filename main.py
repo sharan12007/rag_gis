@@ -5,9 +5,12 @@ from langgraph.graph import START, StateGraph, MessagesState, END
 from langchain_core.tools import tool
 from langchain_core.messages import SystemMessage,HumanMessage
 from langgraph.prebuilt import ToolNode, tools_condition
-from langgraph.checkpoint.memory import MemorySaver
 from langchain_tavily import TavilySearch
+from langgraph.checkpoint.sqlite import SqliteSaver
 import os
+import sqlite3
+
+conn=sqlite3.connect("chatbot.db",check_same_thread=False)
 
 load_dotenv()
 
@@ -26,7 +29,7 @@ vector_store = Vector_Store_Check(urls)
 
 @tool
 def search_web(query: str) -> str:
-    """Search the web for real-time or latest info on anything (news, weather, movies, etc)."""
+    """Search the web for real-time or latest info on anything on the web(news, weather, movies,wikipidea etc)."""
     search = TavilySearch(max_results=3)
     search_results = search.invoke(query)
     return search_results
@@ -69,7 +72,7 @@ def generate(state: MessagesState):
     return{"messages": [results]}
 
 # Memory & config
-memory = MemorySaver()
+memory = SqliteSaver(conn)
 config = {"configurable": {"thread_id": "abc123"}}
 
 # Build graph

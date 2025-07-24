@@ -17,5 +17,6 @@ dependencies = [
     "langchain-tavily>=0.2.10",
     "langchain[google-genai]>=0.3.26",
     "langgraph>=0.5.3",
+    "langgraph-checkpoint-sqlite>=2.0.10",
     "sentence-transformers>=5.0.0",
 ]
